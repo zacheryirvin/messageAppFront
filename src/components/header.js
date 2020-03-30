@@ -8,7 +8,17 @@ const NavLink = styled(Link)`
   margin-right: 5px;
 `
 
-const Header = ({ siteTitle }) => {
+const logout = async () => {
+  const url = `http://localhost:4000/users/logout`
+  const res = await fetch(url, {
+    method: 'GET',
+  })
+  const response = await res.json()
+  return response;
+}
+
+const Header = (props) => {
+  console.log(props)
   return (
     <header>
       <div css={css`
@@ -16,7 +26,10 @@ const Header = ({ siteTitle }) => {
         justify-content: right;
       `}>
         <NavLink to='/'>Home</NavLink>
-        <NavLink to='/login/'>Login</NavLink>
+        {props.user != undefined
+            ? <NavLink to='/login' onClick={logout}>Logout</NavLink>
+            : <NavLink to='/login/'>Login</NavLink>
+        }
       </div>
     </header>
   )

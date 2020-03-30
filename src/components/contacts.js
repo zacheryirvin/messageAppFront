@@ -1,12 +1,10 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import axios from 'axios';
 import {Link} from 'gatsby'
 import {css, jsx} from '@emotion/core';
 
 
-const Friends = () => {
-
+const Friends = (props) => {
   const [friends, setFriends] = useState([]);
   const string = JSON.stringify(friends)
 
@@ -21,7 +19,9 @@ const Friends = () => {
       credentials: 'include',
     })
     const response = await res.json();
-    setFriends(response);
+    (response.length) > 0
+      ? setFriends(response)
+      : setFriends([]);
   }
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const Friends = () => {
           return (
             <div key={x.user_name}>
               <Link to={`/conversation`}
-                state={{friend: x}}
+                state={{user: props.user, friend: x}}
               >{x.user_name}</Link>
             </div>
           )

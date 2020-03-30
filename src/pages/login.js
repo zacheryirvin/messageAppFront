@@ -23,7 +23,6 @@ const ButtonDiv = styled('div')`
 const Login = () => {
 
   const [login, setLogin] = useState({user_name: "", password: ""});
-  const [user, setUser] = useState()
   const captureLogin = (e) => {
     let copyLogin = {...login}
     const target = e.target.id

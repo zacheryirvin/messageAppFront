@@ -1,19 +1,48 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import { Link } from "gatsby"
+import Header from '../components/header.js'
 
 import Layout from "../components/layout"
-import Image from "../components/image"
+// import Image from "../components/image"
 import SEO from "../components/seo"
 import Friends from '../components/contacts.js'
 
+const getUser = async () => {
+  const url = 'http://localhost:4000/users'
+  const res = await fetch(url, {
+    method: 'GET',
+    credentials: 'include'
+  })
+  const response = await res.json();
+  console.log(response)
+  return response
+}
+
 const IndexPage = ({location}) => {
-  console.log(location.state)
+  const [user, setUser] = useState([]);
+  const string = JSON.stringify(user);
+  useEffect(() => {
+    if (location.state.user === undefined) {
+      const anon = async () => {
+        const user = await getUser()
+        setUser(user.user)
+      }
+      anon()
+    } else {
+      if (location.state) {
+        setUser(location.state.user)
+      } 
+    }
+  }, [string])
+  // console.log(location.state)
+  // console.log(user)
   return (
-    <Layout>
+    <>
+      <Header user={user}/>
       <SEO title="Home" />
-      <Friends />
+      <Friends user={user}/>
       <Link to="/page-2/">Go to page 2</Link>
-    </Layout>
+    </>
   )
 }
 
