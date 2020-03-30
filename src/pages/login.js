@@ -23,6 +23,7 @@ const ButtonDiv = styled('div')`
 const Login = () => {
 
   const [login, setLogin] = useState({user_name: "", password: ""});
+  const [user, setUser] = useState()
   const captureLogin = (e) => {
     let copyLogin = {...login}
     const target = e.target.id
@@ -36,14 +37,20 @@ const Login = () => {
     const url = 'http://localhost:4000/users/login';
     const reset = {user_name: "", password: ""}
     const res = await fetch(url, {
+      headers: {
+        Accept: '*',
+        'Content-Type': 'application/json'
+      },
       method: 'POST',
-      body: JSON.stringify(login)})
+      credentials: 'include',
+      body: JSON.stringify(login)
+    })
     setLogin(reset);
     const response = await res; 
+    // return response;
     if (response.status === 200) {
-      console.log(response)
-      navigate('/');
-      return response;
+      const theState = await response.json()
+      navigate('/', {state: theState});
     } else {
       return response;
     }
