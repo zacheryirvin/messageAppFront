@@ -14,26 +14,28 @@ const getUser = async () => {
     credentials: 'include'
   })
   const response = await res.json();
-  console.log(response)
   return response
 }
 
 const IndexPage = ({location}) => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState();
   const string = JSON.stringify(user);
   useEffect(() => {
-    if (location.state.user === undefined) {
-      const anon = async () => {
-        const user = await getUser()
-        setUser(user.user)
+    if (location.state && user === undefined) {
+      if (location.state.user === undefined) {
+        const anon = async () => {
+          const theUser = await getUser()
+          setUser(theUser.user);
+        }
+        anon()
+      } else {
+        if (location.state) {
+          setUser(location.state.user)
+        } 
       }
-      anon()
-    } else {
-      if (location.state) {
-        setUser(location.state.user)
-      } 
     }
   }, [string])
+
   // console.log(location.state)
   // console.log(user)
   return (
