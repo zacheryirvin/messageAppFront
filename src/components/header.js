@@ -24,24 +24,44 @@ const Header = (props) => {
     <header>
       {user != undefined
           ? (
+            <div css={css`display: flex`}>
+              <div css={css`
+                display: flex;
+                justify-content: left;
+                width: 49%;
+              `}>
+                <NavLink to='/userList'>Users</NavLink>
+              </div>
               <div css={css`
                 display: flex;
                 justify-content: right;
+                width: 49%;
               `}>
                 <NavLink to='/' state={{user: props.user}}>Home</NavLink>
                 <NavLink to='/login/' onClick={logout}> Logout</NavLink>
                 <NavLink css={css`display: none`} to='/login/'>Login</NavLink>
               </div>
+            </div>
             ) 
           : (
+            <div css={css`display: flex`}>
+              <div css={css`
+                display: flex;
+                justify-content: left;
+                width: 49%;
+              `}>
+                <NavLink to='/userList'>Users</NavLink>
+              </div>
               <div css={css`
                 display: flex;
                 justify-content: right;
+                width: 49%;
               `}>
                 <NavLink to='/' state={{user: props.user}}>Home</NavLink>
                 <NavLink css={css`display: none`} to='/login/' onClick={logout}> Logout</NavLink>
                 <NavLink to='/login/'>Login</NavLink>
               </div>
+            </div>
             )
       }
     </header>

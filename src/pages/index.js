@@ -18,7 +18,11 @@ const getUser = async () => {
 }
 
 const IndexPage = ({location}) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(
+    location.state
+    ? location.state.user
+    : null 
+  );
   const string = JSON.stringify(user);
   useEffect(() => {
     if (location.state && user === undefined) {
@@ -43,7 +47,6 @@ const IndexPage = ({location}) => {
       <Header user={user}/>
       <SEO title="Home" />
       <Friends user={user}/>
-      <Link to="/page-2/">Go to page 2</Link>
     </>
   )
 }

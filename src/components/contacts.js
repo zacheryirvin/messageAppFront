@@ -24,6 +24,21 @@ const Friends = (props) => {
       : setFriends([]);
   }
 
+  const deleteContact = async (e) => {
+    const {id} = e.target
+    const url = `http://localhost:4000/friends`
+    const res = await fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+      credentials: 'include',
+      body: JSON.stringify({toId: [id]})
+    })
+    console.log(await res.json())
+  }
+
   useEffect(() => {
     getContact()
   }, [string.length])
@@ -37,6 +52,7 @@ const Friends = (props) => {
               <Link to={`/conversation`}
                 state={{user: props.user, friend: x}}
               >{x.user_name}</Link>
+              <button id={x.id} onClick={deleteContact}>X</button>
             </div>
           )
         })}
