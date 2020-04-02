@@ -40,6 +40,7 @@ const Friends = (props) => {
   }
 
   const confirmContact = async (e) => {
+    console.log('ran')
     const toId = e.target.dataset.id;
     const url = `http://localhost:4000/friends/confirm`
     const res = await fetch(url, {
