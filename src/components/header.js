@@ -30,7 +30,7 @@ const Header = (props) => {
                 justify-content: left;
                 width: 49%;
               `}>
-                <NavLink to='/userList'>Users</NavLink>
+                <NavLink to='/userList' state={{user: props.user}}>Users</NavLink>
               </div>
               <div css={css`
                 display: flex;
@@ -50,7 +50,7 @@ const Header = (props) => {
                 justify-content: left;
                 width: 49%;
               `}>
-                <NavLink to='/userList'>Users</NavLink>
+                <NavLink to='/userList' state={{user: props.user}}>Users</NavLink>
               </div>
               <div css={css`
                 display: flex;

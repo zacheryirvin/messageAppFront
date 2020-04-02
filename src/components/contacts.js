@@ -39,6 +39,20 @@ const Friends = (props) => {
     console.log(await res.json())
   }
 
+  const confirmContact = async (e) => {
+    const toId = e.target.dataset.id;
+    const url = `http://localhost:4000/friends/confirm`
+    const res = await fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify({toId: toId})
+    })
+  }
+
   useEffect(() => {
     getContact()
   }, [string.length])
@@ -52,6 +66,10 @@ const Friends = (props) => {
               <Link to={`/conversation`}
                 state={{user: props.user, friend: x}}
               >{x.user_name}</Link>
+            {x.confirmed === false
+              ? <button data-id={x.id} onClick={confirmContact}>Confirm</button>
+              : null
+            }
               <button id={x.id} onClick={deleteContact}>X</button>
             </div>
           )

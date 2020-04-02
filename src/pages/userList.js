@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Header from '../components/header.js'
 
-const UserList = () => {
+const UserList = ({location}) => {
   // const [users, setUsers] = useState([]);
 
   const getUsers = async (e) => {
@@ -14,16 +14,35 @@ const UserList = () => {
     return response;
   }
 
+  const requestFriend = async (e) => {
+    e.preventDefault();
+    const friendId = e.target.id
+    const url = `http://localhost:4000/friends/add`;
+    const res = await fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify({toId: friendId})
+    })
+    const response = await res.json();
+    console.log(response)
+    return response;
+  }
+
   const [users, setUsers] = useState([])
   const string = JSON.stringify(users)
 
   useEffect(() => {
     const anon = async () => {
       const tempUsers = await getUsers();
-      console.log(tempUsers)
       const tempString = JSON.stringify(tempUsers)
-      if (tempString != string) {
-        setUsers(tempUsers);
+      if (!tempUsers.Error) {
+        if (tempString !== string) {
+          setUsers(tempUsers);
+        }
       }
     }
     anon();
@@ -31,11 +50,14 @@ const UserList = () => {
 
   return (
     <>
-      <Header />
+      <Header user={location.state.user}/>
       <ul>
       {users.map(x => {
         return (
-            <li key={x.id}>{x.user_name}</li>
+          <div key={x.user_name}>
+            <li key={x.user_name}>{x.user_name}</li>
+            <button id={x.id} key={x.id} onClick={requestFriend}>Add</button>
+          </div>
         )
       })}
       </ul>
