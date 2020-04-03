@@ -46,7 +46,10 @@ const IndexPage = ({location}) => {
     <>
       <Header user={user}/>
       <SEO title="Home" />
-      <Friends user={user}/>
+      { user != undefined 
+        ? <Friends user={user}/>
+        : <Link to='/signUp'>Sign Up</Link>
+      }
     </>
   )
 }

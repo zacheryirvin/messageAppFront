@@ -21,6 +21,7 @@ const TextBox = (props) => {
       credentials: 'include'
     })
     const response = await res.json();
+    setMessage("");
     console.log(response);
     return response;
   }
@@ -29,7 +30,7 @@ const TextBox = (props) => {
       display: flex;
     `}>
       <textarea id="messages" name="textBox" cols="35" rows="10"
-      autoComplete="on" autoCapitalize="sentences" maxLength="250" onChange={capInput}></textarea>
+      autoComplete="on" autoCapitalize="sentences" maxLength="250" value={message} onChange={capInput}></textarea>
       <button onClick={sendMessage}>Send</button>
     </div>
   )

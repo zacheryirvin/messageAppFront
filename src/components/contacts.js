@@ -25,7 +25,7 @@ const Friends = (props) => {
   }
 
   const deleteContact = async (e) => {
-    const {id} = e.target
+    const id = e.target.id || e.target.dataset.id
     const url = `http://localhost:4000/friends`
     const res = await fetch(url, {
       headers: {
@@ -36,6 +36,7 @@ const Friends = (props) => {
       credentials: 'include',
       body: JSON.stringify({toId: [id]})
     })
+    getContact();
     console.log(await res.json())
   }
 
@@ -52,14 +53,17 @@ const Friends = (props) => {
       credentials: 'include',
       body: JSON.stringify({toId: toId})
     })
+    getContact();
   }
 
   useEffect(() => {
     getContact()
-  }, [string.length])
+  }, [])
+
 
   return (
     <>
+      {console.log(props)}
       <div>
         {friends.map(x => {
           return (
@@ -67,10 +71,13 @@ const Friends = (props) => {
               <Link to={`/conversation`}
                 state={{user: props.user, friend: x}}
               >{x.user_name}</Link>
-            {x.confirmed === false
-              ? <button data-id={x.id} onClick={confirmContact}>Confirm</button>
-              : null
-            }
+              {x.confirmed === false && x.requester === false
+                ? <button data-id={x.id} onClick={confirmContact}>Confirm</button>
+                : (x.confirmed === false && x.requester === true)
+                ? <button data-id={x.id} onClick={deleteContact}>Cancel</button>
+                : null
+                
+              }
               <button id={x.id} onClick={deleteContact}>X</button>
             </div>
           )
