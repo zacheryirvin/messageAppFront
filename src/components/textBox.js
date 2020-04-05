@@ -23,7 +23,6 @@ const TextBox = (props) => {
     })
     const response = await res.json();
     setMessage("");
-    props.finalState();
     console.log(response)
     return response;
   }
