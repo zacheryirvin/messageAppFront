@@ -9,6 +9,7 @@ const TextBox = (props) => {
   }
 
   const sendMessage = async (e) => {
+    e.preventDefault();
     const toSend = JSON.stringify({toId: props.friendId, message: message})
     const url = 'http://localhost:4000/messages';
     const res = await fetch(url, {
@@ -22,7 +23,8 @@ const TextBox = (props) => {
     })
     const response = await res.json();
     setMessage("");
-    console.log(response);
+    props.finalState();
+    console.log(response)
     return response;
   }
   return (

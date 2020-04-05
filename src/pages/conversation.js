@@ -4,6 +4,7 @@ import {css} from '@emotion/core'
 import Layout from '../components/layout.js'
 import Header from '../components/header.js'
 import TextBox from '../components/textBox.js'
+import Pusher from 'pusher-js'
 
 
 const Conversation = ({location}) => {
@@ -19,13 +20,36 @@ const Conversation = ({location}) => {
     return response;
   }
   const [convo, setConvo] = useState([]);
+  const [msg, setMst] = useState({})
+
+  const string = JSON.stringify(msg);
+
+  useEffect(() => {
+    const pusher = new Pusher('5033bb4cfc6d9a9ce2ea', {
+      cluster: 'us3',
+    })
+    console.log(pusher)
+    const channel = pusher.subscribe('watch_messages')
+    channel.bind('new_record', (msg) => {
+      setMst(msg)
+    })
+  }, [])
 
   useEffect(() => {
     const anon = async () => {
       setConvo(await getConversation());
     }
+    console.log("ran")
     anon();
-  }, [convo.length])
+  }, [])
+
+  const finalState = () => {
+    console.log(msg)
+    // setConvo([...convo, JSON.parse(msg)])
+  }
+  console.log(msg)
+
+
 
   const idReplace = convo.map(x => {
     const userId = location.state.user.id
@@ -38,11 +62,12 @@ const Conversation = ({location}) => {
       return x = {...x, from_id: friend}
     }
   })
+  // console.log(convo)
   return (
     <>
       <Header user={location.state.user}/>
       <div>
-        <TextBox friendId={location.state.friend.id}/>
+        <TextBox friendId={location.state.friend.id} finalState={finalState}/>
         <div css={css`
           height: 70vh;
           border: 1px solid black;
