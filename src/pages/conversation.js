@@ -18,7 +18,7 @@ const Conversation = ({location}) => {
       credentials: 'include'
     })
     const response = await res.json();
-    return response;
+    return await response;
   }
   const [convo, setConvo] = useState([]);
 
@@ -28,24 +28,33 @@ const Conversation = ({location}) => {
       setConvo(result);
     }
     anon();
-  }, [convo.length])
+  }, [])
 
   const addMsg = (msg) => {
-    setConvo([...convo, msg])
+    let temp = convo.slice()
+    if (temp[0].id != msg.id) {
+      temp.unshift(msg)
+    }
+    setConvo(temp)
   }
 
 
   // console.log(convo)
   return (
     <>
-      <Header user={location.state.user}/>
-      <div>
-        <TextBox friendId={location.state.friend.id}/>
-        <Messages messages={convo} userId={location.state.user.id}
-          user={location.state.user} friendId={location.state.friend.id}
-          friend={location.state.friend} addMsg={addMsg}
-        />
-      </div>
+      {convo.length === 0
+        ? <div></div>
+        : <>
+            <Header user={location.state.user}/>
+            <div>
+              <TextBox friendId={location.state.friend.id}/>
+              <Messages messages={convo} userId={location.state.user.id}
+                user={location.state.user} friendId={location.state.friend.id}
+                friend={location.state.friend} addMsg={addMsg}
+              />
+            </div>
+          </>
+      }
     </>
   )
 }

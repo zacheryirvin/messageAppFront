@@ -4,6 +4,7 @@ import Pusher from 'pusher-js'
 
 const Messages = (props) => {
   const {messages} = props
+  console.log(messages)
 
   const getConversation = async (e) => {
     const url = `http://localhost:4000/messages/${props.friendId}/feed`;
@@ -15,6 +16,7 @@ const Messages = (props) => {
   }
 
   useEffect(() => {
+    console.log("ran")
     const anon = async () => {
       await getConversation();
     }
@@ -28,7 +30,9 @@ const Messages = (props) => {
     })
   }, [])
 
-  const idReplace = messages.map(x => {
+
+
+  let idReplace = messages.map(x => {
     const userId = props.userId
     const user = props.user 
     const friendId = props.friendId
@@ -54,7 +58,7 @@ const Messages = (props) => {
               padding-right: 5px;
             `}>
               <div>{x.from_id.user_name}</div>
-              <div>{x.date}</div>
+              <div>{x.time_stp || x.date}</div>
               <p>{x.message}</p>
           </div>
           )
