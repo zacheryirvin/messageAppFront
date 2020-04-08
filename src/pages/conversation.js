@@ -68,7 +68,12 @@ const Conversation = ({location}) => {
   return (
     <>
       {convo.length === 0 
-        ? <div></div>
+      ? <div>
+            <Header user={location.state.user}/>
+            <div>
+              <TextBox friendId={location.state.friend.id}/>
+            </div>
+        </div>
         : <>
             <Header user={location.state.user}/>
             <div>
