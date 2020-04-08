@@ -3,33 +3,7 @@ import {css} from '@emotion/core'
 import Pusher from 'pusher-js'
 
 const Messages = (props) => {
-  const {messages} = props
-  console.log(messages)
-
-  const getConversation = async (e) => {
-    const url = `http://localhost:4000/messages/${props.friendId}/feed`;
-    const res = await fetch(url, {
-      method: 'GET',
-      credentials: 'include'
-    })
-    const response = await res.json();
-  }
-
-  useEffect(() => {
-    console.log("ran")
-    const anon = async () => {
-      await getConversation();
-    }
-    anon();
-    const pusher = new Pusher('5033bb4cfc6d9a9ce2ea', {
-      cluster: 'us3',
-    })
-    const channel = pusher.subscribe('watch_messages')
-    channel.bind('new_record', (msg) => {
-      props.addMsg(msg)
-    })
-  }, [])
-
+  const messages = props.messages
 
 
   let idReplace = messages.map(x => {

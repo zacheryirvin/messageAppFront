@@ -20,29 +20,54 @@ const Conversation = ({location}) => {
     const response = await res.json();
     return await response;
   }
+
+  const getConversationFeed = async (e) => {
+    const url = `http://localhost:4000/messages/${toId}/feed`;
+    const res = await fetch(url, {
+      method: 'GET',
+      credentials: 'include'
+    })
+    const response = await res.json();
+  }
   const [convo, setConvo] = useState([]);
+  const [msg, setMsg] = useState()
+  const string = JSON.stringify(convo)
 
   useEffect(() => {
     const anon = async () => {
-      const result = await getConversation()
-      setConvo(result);
+      const conversation = await getConversation();
+      const feed = await getConversationFeed();
+      setConvo(conversation);
     }
     anon();
+    const pusher = new Pusher('5033bb4cfc6d9a9ce2ea', {
+      cluster: 'us3',
+    })
+    const channel = pusher.subscribe('watch_messages')
+    channel.bind('new_record', (msg) => {
+      // props.addMsg(messages, msg)
+      setMsg(msg)
+    })
+    
   }, [])
 
-  const addMsg = (msg) => {
-    let temp = convo.slice()
-    if (temp[0].id != msg.id) {
+  useEffect(() => {
+    const temp = [...convo]
+    if (msg) {
       temp.unshift(msg)
+      setConvo(temp)
     }
-    setConvo(temp)
+  },[msg])
+
+  const addMsg = async (messages) => {
+      // const temp = await getConversation();
+      setConvo(messages)
   }
 
 
-  // console.log(convo)
   return (
     <>
-      {convo.length === 0
+      {convo.length === 0 
         ? <div></div>
         : <>
             <Header user={location.state.user}/>

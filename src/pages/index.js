@@ -38,7 +38,7 @@ const IndexPage = ({location}) => {
         } 
       }
     }
-  }, [string])
+  }, [])
 
   // console.log(location.state)
   // console.log(user)
