@@ -56,7 +56,7 @@ const UserList = ({location}) => {
 
   return (
     <>
-      <Header user={location.state.user}/>
+      <Header user={user}/>
       <ul>
       {users.map(x => {
         return (
