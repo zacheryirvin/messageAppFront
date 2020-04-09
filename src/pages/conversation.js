@@ -56,18 +56,6 @@ const Conversation = ({location}) => {
     
   }, [])
 
-  useEffect(() => {
-    const temp = [...convo]
-    if (msg) {
-      const findId = temp.find(x => {
-        return x.id === msg.id
-      })
-      if (!findId) {
-        temp.unshift(msg)
-        setConvo(temp)
-      }
-    }
-  },[msg])
 
   const addMsg = async (messages) => {
       // const temp = await getConversation();
@@ -85,6 +73,21 @@ const Conversation = ({location}) => {
     userId = location.state.user.id;
     friend = location.state.friend;
   }
+
+  useEffect(() => {
+    const temp = [...convo]
+    if (msg) {
+      const findId = temp.find(x => {
+        return x.id === msg.id
+      })
+      if (!findId) {
+        if ((msg.to_id === toId && msg.from_id === userId) || (msg.from_id === toId && msg.to_id === userId)) {
+          temp.unshift(msg)
+          setConvo(temp)
+        }
+      }
+    }
+  },[msg])
 
 
   return (
