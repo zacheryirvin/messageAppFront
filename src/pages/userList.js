@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react'
 import Header from '../components/header.js'
 
 const UserList = ({location}) => {
-  // const [users, setUsers] = useState([]);
 
   const getUsers = async (e) => {
     // const url = `http://localhost:4000/users/all`
@@ -49,6 +48,11 @@ const UserList = ({location}) => {
     }
     anon();
   },[])
+
+  let user;
+  if (location.state) {
+    user = location.state.user;
+  }
 
   return (
     <>
