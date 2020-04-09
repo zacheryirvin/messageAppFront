@@ -74,27 +74,35 @@ const Conversation = ({location}) => {
       setConvo(messages)
   }
 
+  let user,
+    friendId,
+    userId,
+    friend
+
+  if (location.state) {
+    user = location.state.user;
+    friendId = location.state.friend.id;
+    userId = location.state.user.id;
+    friend = location.state.friend;
+  }
+
 
   return (
     <>
       {convo.length === 0 
       ? <div>
-        <Header user={
-          location.state
-          ? location.state.user
-          : null
-        }/>
+        <Header user={user}/>
             <div>
-              <TextBox friendId={location.state.friend.id}/>
+              <TextBox friendId={friendId}/>
             </div>
         </div>
         : <>
-            <Header user={location.state.user}/>
+            <Header user={user}/>
             <div>
-              <TextBox friendId={location.state.friend.id}/>
-              <Messages messages={convo} userId={location.state.user.id}
-                user={location.state.user} friendId={location.state.friend.id}
-                friend={location.state.friend} addMsg={addMsg}
+              <TextBox friendId={friendId}/>
+              <Messages messages={convo} userId={userId}
+                user={location.state.user} friendId={friendId}
+                friend={friend} addMsg={addMsg}
               />
             </div>
           </>
