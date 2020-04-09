@@ -81,14 +81,13 @@ const Conversation = ({location}) => {
         return x.id === msg.id
       })
       if (!findId) {
-        if ((msg.to_id === toId && msg.from_id === userId) || (msg.from_id === toId && msg.to_id === userId)) {
+        if ((msg.to_id === toId && msg.from_id === userId) || msg.from_id === toId && msg.to_id === userId) {
           temp.unshift(msg)
           setConvo(temp)
         }
       }
     }
   },[msg])
-
 
   return (
     <>
@@ -104,7 +103,7 @@ const Conversation = ({location}) => {
             <div>
               <TextBox friendId={friendId}/>
               <Messages messages={convo} userId={userId}
-                user={location.state.user} friendId={friendId}
+                user={user} friendId={friendId}
                 friend={friend} addMsg={addMsg}
               />
             </div>
