@@ -9,7 +9,10 @@ import Pusher from 'pusher-js'
 
 
 const Conversation = ({location}) => {
-  const toId = location.state.friend.id
+  let toId;
+  if (location.state) {
+    toId = location.state.friend.id
+  }
 
   const getConversation = async (e) => {
     // const url = `http://localhost:4000/messages/${toId}`;
