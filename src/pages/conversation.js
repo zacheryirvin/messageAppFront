@@ -12,7 +12,8 @@ const Conversation = ({location}) => {
   const toId = location.state.friend.id
 
   const getConversation = async (e) => {
-    const url = `http://localhost:4000/messages/${toId}`;
+    // const url = `http://localhost:4000/messages/${toId}`;
+    const url = `${process.env.GATSBY_MESSAGES_URL}/${toId}`
     const res = await fetch(url, {
       method: 'GET',
       credentials: 'include'
@@ -22,7 +23,8 @@ const Conversation = ({location}) => {
   }
 
   const getConversationFeed = async (e) => {
-    const url = `http://localhost:4000/messages/${toId}/feed`;
+    // const url = `http://localhost:4000/messages/${toId}/feed`;
+    const url = `${process.env.GATSBY_MESSAGES_URL}/${toId}/feed`
     const res = await fetch(url, {
       method: 'GET',
       credentials: 'include'

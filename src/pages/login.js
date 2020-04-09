@@ -33,7 +33,8 @@ const Login = () => {
 
   const hitLogin = async (e) => {
     e.preventDefault();
-    const url = 'http://localhost:4000/users/login';
+    // const url = 'http://localhost:4000/users/login';
+    const url = `${process.env.GATSBY_USERS_URL}/login`
     const reset = {user_name: "", password: ""}
     const res = await fetch(url, {
       headers: {

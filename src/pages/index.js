@@ -8,7 +8,8 @@ import SEO from "../components/seo"
 import Friends from '../components/contacts.js'
 
 const getUser = async () => {
-  const url = 'http://localhost:4000/users'
+  // const url = 'http://localhost:4000/users'
+  const url = process.env.GATSBY_USERS_URL
   const res = await fetch(url, {
     method: 'GET',
     credentials: 'include'

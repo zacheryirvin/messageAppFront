@@ -9,7 +9,8 @@ const Friends = (props) => {
   const string = JSON.stringify(friends)
 
   const getContact = async (e) => {
-    const url = 'http://localhost:4000/friends'
+    // const url = 'http://localhost:4000/friends'
+    const url = process.env.GATSBY_FRIENDS_URL
     const res = await fetch(url, {
       header: {
         Accept: 'application/json',
@@ -26,7 +27,8 @@ const Friends = (props) => {
 
   const deleteContact = async (e) => {
     const id = e.target.id || e.target.dataset.id
-    const url = `http://localhost:4000/friends`
+    // const url = `http://localhost:4000/friends`
+    const url = process.env.GATSBY_FRIENDS_URL
     const res = await fetch(url, {
       headers: {
         Accept: 'application/json',
@@ -43,7 +45,8 @@ const Friends = (props) => {
   const confirmContact = async (e) => {
     console.log('ran')
     const toId = e.target.dataset.id;
-    const url = `http://localhost:4000/friends/confirm`
+    // const url = `http://localhost:4000/friends/confirm`
+    const url = `${process.env.GATSBY_FRIENDS_URL}/confirm`
     const res = await fetch(url, {
       headers: {
         Accept: 'application/json',

@@ -11,15 +11,16 @@ const TextBox = (props) => {
   const sendMessage = async (e) => {
     e.preventDefault();
     const toSend = JSON.stringify({toId: props.friendId, message: message})
-    const url = 'http://localhost:4000/messages';
+    // const url = 'http://localhost:4000/messages';
+    const url = process.env.GATSBY_MESSAGES_URL
     const res = await fetch(url, {
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+        Accept: '*',
+        'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: toSend,
-      credentials: 'include'
+      credentials: 'include',
+      body: toSend
     })
     const response = await res.json();
     setMessage("");
