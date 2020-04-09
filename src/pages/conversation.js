@@ -10,7 +10,7 @@ import Pusher from 'pusher-js'
 
 const Conversation = ({location}) => {
   let toId;
-  if (location.state) {
+  if (location.state){
     toId = location.state.friend.id
   }
 
@@ -59,8 +59,13 @@ const Conversation = ({location}) => {
   useEffect(() => {
     const temp = [...convo]
     if (msg) {
-      temp.unshift(msg)
-      setConvo(temp)
+      const findId = temp.find(x => {
+        return x.id === msg.id
+      })
+      if (!findId) {
+        temp.unshift(msg)
+        setConvo(temp)
+      }
     }
   },[msg])
 
@@ -74,7 +79,11 @@ const Conversation = ({location}) => {
     <>
       {convo.length === 0 
       ? <div>
-            <Header user={location.state.user}/>
+        <Header user={
+          location.state
+          ? location.state.user
+          : null
+        }/>
             <div>
               <TextBox friendId={location.state.friend.id}/>
             </div>
