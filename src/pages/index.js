@@ -44,14 +44,14 @@ const IndexPage = ({location}) => {
   // console.log(location.state)
   // console.log(user)
   return (
-    <>
+    <Layout>
       <Header user={user}/>
       <SEO title="Home" />
       { user != undefined 
         ? <Friends user={user}/>
         : <Link to='/signUp'>Sign Up</Link>
       }
-    </>
+    </Layout>
   )
 }
 

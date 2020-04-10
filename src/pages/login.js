@@ -2,6 +2,7 @@ import React from "react";
 import {useState} from "react";
 
 import Layout from "../components/layout";
+import Header from "../components/header.js"
 import SEO from "../components/seo";
 import styled from '@emotion/styled';
 import {Link, navigate} from 'gatsby';
@@ -59,6 +60,7 @@ const Login = () => {
   return (
     <Layout>
       <SEO title="Login" />
+      <Header/>
       <div>
         <ContainerDiv>
         <FlexDiv>

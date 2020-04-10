@@ -28,14 +28,14 @@ const Header = (props) => {
             <div css={css`display: flex`}>
               <div css={css`
                 display: flex;
-                justify-content: left;
+                justify-content: flex-start;
                 width: 49%;
               `}>
                 <NavLink to='/userList' state={{user: props.user}}>Users</NavLink>
               </div>
               <div css={css`
                 display: flex;
-                justify-content: right;
+                justify-content: flex-end;
                 width: 49%;
               `}>
                 <NavLink to='/' state={{user: props.user}}>Home</NavLink>
@@ -48,14 +48,14 @@ const Header = (props) => {
             <div css={css`display: flex`}>
               <div css={css`
                 display: flex;
-                justify-content: left;
+                justify-content: flex-start;
                 width: 49%;
               `}>
                 <NavLink to='/userList' state={{user: props.user}}>Users</NavLink>
               </div>
               <div css={css`
                 display: flex;
-                justify-content: right;
+                justify-content: flex-end;
                 width: 49%;
               `}>
                 <NavLink to='/' state={{user: props.user}}>Home</NavLink>
