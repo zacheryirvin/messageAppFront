@@ -1,10 +1,66 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import {Link} from 'gatsby'
-import {css, jsx} from '@emotion/core';
+import {css} from '@emotion/core';
+import styled from '@emotion/styled'
 
 
 const Friends = (props) => {
+const UserLink = styled(Link)`
+  display: inline-block;
+  vertical-align: middle;
+  flex-wrap: wrap;
+  width: 200px;
+  margin-right: 20px;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 1.5rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+
+  :hover {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform, color, background-color;
+  transition-property: transform, color, background-color;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  background-color: black;
+  color: white;
+  }
+
+`
+
+const UserButton = styled('button')`
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 5px;
+  padding: 2px;
+
+  :hover {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform, color, background-color;
+  transition-property: transform, color, background-color;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  background-color: darkred;
+  color: white;
+  cursor: pointer;
+  }
+`
   const [friends, setFriends] = useState([]);
   const string = JSON.stringify(friends)
 
@@ -66,22 +122,26 @@ const Friends = (props) => {
 
   return (
     <>
-      {console.log(props)}
       <div>
         {friends.map(x => {
           return (
-            <div key={x.user_name}>
-              <Link to={`/conversation`}
+            <div css={css`
+            margin-top: 5px;
+              `}
+              key={x.user_name}>
+              <UserLink to={`/conversation`}
                 state={{user: props.user, friend: x}}
-              >{x.user_name}</Link>
+              >{x.user_name}</UserLink>
               {x.confirmed === false && x.requester === false
-                ? <button data-id={x.id} onClick={confirmContact}>Confirm</button>
-                : (x.confirmed === false && x.requester === true)
-                ? <button data-id={x.id} onClick={deleteContact}>Cancel</button>
-                : null
+                  ? <UserButton css={css`
+                  :hover {
+                  background-color: darkgreen;
+                  }
+                    `}
+                data-id={x.id} onClick={confirmContact}>Confirm</UserButton>
+                : <UserButton id={x.id} onClick={deleteContact}>Un-Friend</UserButton>
                 
               }
-              <button id={x.id} onClick={deleteContact}>X</button>
             </div>
           )
         })}

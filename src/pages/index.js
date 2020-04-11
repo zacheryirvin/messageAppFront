@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import { Link } from "gatsby"
 import Header from '../components/header.js'
+import {css} from '@emotion/core'
 
 import Layout from "../components/layout"
 // import Image from "../components/image"
@@ -49,7 +50,35 @@ const IndexPage = ({location}) => {
       <SEO title="Home" />
       { user != undefined 
         ? <Friends user={user}/>
-        : <Link to='/signUp'>Sign Up</Link>
+          : <Link css={css`
+          display: flex;
+          width: 200px;
+          height: 50px;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          color: black;
+          font-size: 2.5rem;
+          border-radius: 5px;
+          padding: 5px;
+          margin: 0 auto;
+          margin-top: 15px;
+
+          :hover {
+          -webkit-transform: perspective(1px) translateZ(0);
+          transform: perspective(1px) translateZ(0);
+          box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+          -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+          -webkit-transition-property: transform, color, background-color;
+          transition-property: transform, color, background-color;
+          -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+          background-color: black;
+          color: white;
+          }
+          `}
+          to='/signUp'>Sign Up</Link>
       }
     </Layout>
   )

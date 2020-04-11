@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Header from '../components/header.js'
+import Layout from "../components/layout.js"
 
 const UserList = ({location}) => {
 
@@ -56,17 +57,19 @@ const UserList = ({location}) => {
 
   return (
     <>
-      <Header user={user}/>
-      <ul>
-      {users.map(x => {
-        return (
-          <div key={x.user_name}>
-            <li key={x.user_name}>{x.user_name}</li>
-            <button id={x.id} key={x.id} onClick={requestFriend}>Add</button>
-          </div>
-        )
-      })}
-      </ul>
+      <Layout>
+        <Header user={user}/>
+        <ul>
+        {users.map(x => {
+          return (
+            <div key={x.user_name}>
+              <li key={x.user_name}>{x.user_name}</li>
+              <button id={x.id} key={x.id} onClick={requestFriend}>Add</button>
+            </div>
+          )
+        })}
+        </ul>
+      </Layout>
     </>
   )
 }

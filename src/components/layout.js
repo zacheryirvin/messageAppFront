@@ -33,13 +33,16 @@ const Layout = ({ children }) => {
         margin-top: 1rem;
         html {
           font-size: 62.5%;
+          font-family: Roboto;
           width: 90%;
           margin: 0 auto;
           max-width: 800px;
         }
       `}
       />
-      <div>{children}</div>
+      <div css={css`
+      margin-top: 15px;
+        `}>{children}</div>
     </>
   )
 }
