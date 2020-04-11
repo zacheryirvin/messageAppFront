@@ -62,7 +62,28 @@ const UserButton = styled('button')`
   }
 `
   const [friends, setFriends] = useState([]);
+  const [selected, setSelected] = useState(new Set())
+  const [button, setButton] = useState(false)
   const string = JSON.stringify(friends)
+
+  const selectedContacts = (e) => {
+    const temp = selected
+    const check = temp.has(e.target.value)
+    if (!check && e.target.checked) {
+      temp.add(e.target.value)
+      setButton(true)
+      setSelected(temp)
+    }
+    if (check && !e.target.checked) {
+      temp.delete(e.target.value)
+      console.log(temp.size)
+      if (temp.size === 0) {
+        setButton(false)
+      }
+      setSelected(temp)
+    }
+    console.log(Array.from(selected));
+  }
 
   const getContact = async (e) => {
     // const url = 'http://localhost:4000/friends'
@@ -98,6 +119,22 @@ const UserButton = styled('button')`
     console.log(await res.json())
   }
 
+  const multiContactDelete = async (e) => {
+    const url = process.env.GATSBY_FRIENDS_URL
+    const arr = Array.from(selected)
+    const res = await fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+      credentials: 'include',
+      body: JSON.stringify({toId: arr})
+    })
+    getContact();
+    console.log(await res.json())
+  }
+
   const confirmContact = async (e) => {
     console.log('ran')
     const toId = e.target.dataset.id;
@@ -122,29 +159,118 @@ const UserButton = styled('button')`
 
   return (
     <>
-      <div>
-        {friends.map(x => {
+      <div css={css`
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+        `}>
+        <div css={css`
+        width: 48%;
+        margin-top: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 10px;
+        height: 85vh;
+        overflow: scroll;
+          `}>
+          <h3 css={css`
+          border: 1px solid black;
+          padding: 5px;
+          font-family: Roboto;
+          font-size: 2rem;
+          border-radius: 5px;
+            `}>Contacts</h3>
+          {button
+              ? <div css={css`
+                text-align: right;
+                margin-top: 5px;
+                `}>
+                <UserButton css={css`
+                font-size: 2rem;
+                `}
+            onClick={multiContactDelete}>Un-Friend-All</UserButton>
+                </div>
+              : null
+          }
+          {friends.map(x => {
+          return (
+            <div css={css`
+            margin-top: 5px;
+            display: flex;
+              `}
+              key={x.user_name}>
+              { 
+                x.confirmed
+                ? <UserLink to={`/conversation`}
+                  state={{user: props.user, friend: x}}
+                >{x.user_name}</UserLink>
+                  : null              }
+              {x.confirmed === true 
+              ? <div css={css`
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 30%;
+                `}>
+                  <UserButton id={x.id} onClick={deleteContact}>Un-Friend</UserButton>
+                  <input css={css`
+                  transform: scale(1.5);
+                    `}
+                    type='checkbox' value={x.id} onClick={selectedContacts}/>
+                </div>
+                : null
+              }
+            </div>
+          )
+        })}
+        </div>
+        <div css={css`
+        width: 48%;
+        margin-top: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 10px;
+        height: 50vh;
+        overflow: scroll;
+          `}>
+          <h3 css={css`
+          border: 1px solid black;
+          padding: 5px;
+          font-family: Roboto;
+          font-size: 2rem;
+          border-radius: 5px;
+            `}>Pending</h3>
+          {friends.map(x => {
           return (
             <div css={css`
             margin-top: 5px;
               `}
               key={x.user_name}>
-              <UserLink to={`/conversation`}
-                state={{user: props.user, friend: x}}
-              >{x.user_name}</UserLink>
-              {x.confirmed === false && x.requester === false
-                  ? <UserButton css={css`
+              { 
+                x.confirmed === false 
+                ? <UserLink css={css`
+                pointer-events: none;
+                  `}
+                  to={`/conversation`}
+                  state={{user: props.user, friend: x}}
+                >{x.user_name}</UserLink>
+                  : null              
+              }
+              {x.confirmed === false && x.requester === true
+                ? <UserButton id={x.id} onClick={deleteContact}>Cancel</UserButton>
+                : x.confirmed === false && x.requester === false
+                ? <UserButton css={css`
                   :hover {
                   background-color: darkgreen;
                   }
-                    `}
+                `}
                 data-id={x.id} onClick={confirmContact}>Confirm</UserButton>
-                : <UserButton id={x.id} onClick={deleteContact}>Un-Friend</UserButton>
-                
+                : null
               }
             </div>
           )
         })}
+        </div>
       </div>
     </>
   )
