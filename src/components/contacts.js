@@ -162,114 +162,123 @@ const UserButton = styled('button')`
       <div css={css`
       display: flex;
       width: 100%;
-      justify-content: space-around;
+      justify-content: space-between;
         `}>
         <div css={css`
-        width: 48%;
+        width: 49%;
+        height: 85vh;
         margin-top: 10px;
         border: 1px solid black;
-        border-radius: 5px;
-        padding: 10px;
-        height: 85vh;
-        overflow: scroll;
+        border-radius: 10px;
           `}>
-          <h3 css={css`
-          border: 1px solid black;
-          padding: 5px;
-          font-family: Roboto;
-          font-size: 2rem;
-          border-radius: 5px;
-            `}>Contacts</h3>
-          {button
-              ? <div css={css`
-                text-align: right;
-                margin-top: 5px;
-                `}>
-                <UserButton css={css`
-                font-size: 2rem;
-                `}
-            onClick={multiContactDelete}>Un-Friend-All</UserButton>
-                </div>
-              : null
-          }
-          {friends.map(x => {
-          return (
-            <div css={css`
-            margin-top: 5px;
-            display: flex;
-              `}
-              key={x.user_name}>
-              { 
-                x.confirmed
-                ? <UserLink to={`/conversation`}
-                  state={{user: props.user, friend: x}}
-                >{x.user_name}</UserLink>
-                  : null              }
-              {x.confirmed === true 
-              ? <div css={css`
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                width: 30%;
-                `}>
-                  <UserButton id={x.id} onClick={deleteContact}>Un-Friend</UserButton>
-                  <input css={css`
-                  transform: scale(1.5);
-                    `}
-                    type='checkbox' value={x.id} onClick={selectedContacts}/>
-                </div>
+          <div css={css`
+          overflow-y: scroll;
+          width: 95%;
+          padding: 10px;
+          height: 95%;
+            `}>
+            <h3 css={css`
+            border: 1px solid black;
+            padding: 5px;
+            font-family: Roboto;
+            font-size: 2rem;
+            border-radius: 5px;
+              `}>Contacts</h3>
+            {button
+                ? <div css={css`
+                  text-align: right;
+                  margin-top: 5px;
+                  `}>
+                  <UserButton css={css`
+                  font-size: 2rem;
+                  `}
+              onClick={multiContactDelete}>Un-Friend-All</UserButton>
+                  </div>
                 : null
-              }
-            </div>
-          )
-        })}
+            }
+            {friends.map(x => {
+            return (
+              <div css={css`
+              margin-top: 5px;
+              display: flex;
+                `}
+                key={x.user_name}>
+                { 
+                  x.confirmed
+                  ? <UserLink to={`/conversation`}
+                    state={{user: props.user, friend: x}}
+                  >{x.user_name}</UserLink>
+                    : null              }
+                {x.confirmed === true 
+                ? <div css={css`
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  width: 30%;
+                  `}>
+                    <UserButton id={x.id} onClick={deleteContact}>Un-Friend</UserButton>
+                    <input css={css`
+                    transform: scale(1.5);
+                      `}
+                      type='checkbox' value={x.id} onClick={selectedContacts}/>
+                  </div>
+                  : null
+                }
+              </div>
+            )
+          })}
+          </div>
         </div>
         <div css={css`
-        width: 48%;
+        width: 49%;
+        height: 50vh;
         margin-top: 10px;
         border: 1px solid black;
-        border-radius: 5px;
-        padding: 10px;
-        height: 50vh;
-        overflow: scroll;
+        border-radius: 10px;
           `}>
-          <h3 css={css`
-          border: 1px solid black;
-          padding: 5px;
-          font-family: Roboto;
-          font-size: 2rem;
-          border-radius: 5px;
-            `}>Pending</h3>
-          {friends.map(x => {
-          return (
-            <div css={css`
-            margin-top: 5px;
-              `}
-              key={x.user_name}>
-              { 
-                x.confirmed === false 
-                ? <UserLink css={css`
-                pointer-events: none;
-                  `}
-                  to={`/conversation`}
-                  state={{user: props.user, friend: x}}
-                >{x.user_name}</UserLink>
-                  : null              
-              }
-              {x.confirmed === false && x.requester === true
-                ? <UserButton id={x.id} onClick={deleteContact}>Cancel</UserButton>
-                : x.confirmed === false && x.requester === false
-                ? <UserButton css={css`
-                  :hover {
-                  background-color: darkgreen;
-                  }
+          <div css={css`
+          overflow-y: scroll;
+          width: 95%;
+          padding: 10px;
+            `}>
+            <h3 css={css`
+            border: 1px solid black;
+            padding: 5px;
+            font-family: Roboto;
+            font-size: 2rem;
+            border-radius: 5px;
+              `}>Pending</h3>
+            {friends.map(x => {
+            return (
+              <div css={css`
+              margin-top: 5px;
                 `}
-                data-id={x.id} onClick={confirmContact}>Confirm</UserButton>
-                : null
-              }
-            </div>
-          )
-        })}
+                key={x.user_name}>
+                { 
+                  x.confirmed === false 
+                  ? <UserLink css={css`
+                  pointer-events: none;
+                    `}
+                    to={`/conversation`}
+                    state={{user: props.user, friend: x}}
+                  >{x.user_name}</UserLink>
+                    : null              
+                }
+                {x.confirmed === false && x.requester === true
+                  ? <UserButton id={x.id} onClick={deleteContact}>Cancel</UserButton>
+                  : x.confirmed === false && x.requester === false
+                  ? <UserButton css={css`
+                    :hover {
+                    background-color: darkgreen;
+                    }
+                  `}
+                  data-id={x.id} onClick={confirmContact}>Confirm</UserButton>
+                  : null
+                }
+              </div>
+            )
+          })}
+          </div>
         </div>
       </div>
     </>

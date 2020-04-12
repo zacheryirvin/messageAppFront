@@ -14,6 +14,8 @@ const ContainerDiv = styled('div')`
 `
 const FlexDiv = styled('div')`
   display: flex;
+  margin-top: 5px;
+  margin-bottom: 5px;
 `
 const ButtonDiv = styled('div')`
   text-align: center;

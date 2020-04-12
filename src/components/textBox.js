@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {css} from '@emotion/core'
+import styled from '@emotion/styled'
 
 const TextBox = (props) => {
   const [message, setMessage] = useState("")
@@ -7,6 +8,29 @@ const TextBox = (props) => {
     const value = e.target.value;
     setMessage(value);
   }
+  const UserButton = styled('button')`
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 5px;
+    padding: 2px;
+    font-weight: bold;
+    width: 65px;
+
+    :hover {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+    background-color: black; 
+    color: white;
+    cursor: pointer;
+    }
+  `
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -30,10 +54,13 @@ const TextBox = (props) => {
   return (
     <div css={css`
       display: flex;
+      justify-content: flex-end;
+      margin-top: 5px;
+      margin-bottom: 5px;
     `}>
-      <textarea id="messages" name="textBox" cols="35" rows="10"
+      <textarea id="messages" name="textBox" cols="38" rows="10"
       autoComplete="on" autoCapitalize="sentences" maxLength="250" value={message} onChange={capInput}></textarea>
-      <button onClick={sendMessage}>Send</button>
+      <UserButton onClick={sendMessage}>Send</UserButton>
     </div>
   )
 }

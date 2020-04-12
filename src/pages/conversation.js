@@ -6,6 +6,7 @@ import Header from '../components/header.js'
 import TextBox from '../components/textBox.js'
 import Messages from '../components/messages.js'
 import Pusher from 'pusher-js'
+import layout from '../components/layout.js'
 
 
 const Conversation = ({location}) => {
@@ -93,12 +94,15 @@ const Conversation = ({location}) => {
     <>
       {convo.length === 0 
       ? <div>
-        <Header user={user}/>
-            <div>
-              <TextBox friendId={friendId}/>
-            </div>
-        </div>
+        <Layout>
+          <Header user={user}/>
+              <div>
+                <TextBox friendId={friendId}/>
+              </div>
+          </Layout>
+          </div>
         : <>
+          <Layout>
             <Header user={user}/>
             <div>
               <TextBox friendId={friendId}/>
@@ -107,6 +111,7 @@ const Conversation = ({location}) => {
                 friend={friend} addMsg={addMsg}
               />
             </div>
+          </Layout>
           </>
       }
     </>
