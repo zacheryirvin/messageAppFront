@@ -103,7 +103,6 @@ const Messages = (props) => {
               )
             }
             })}
-            }
       </div>
   )
 }
