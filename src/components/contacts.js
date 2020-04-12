@@ -76,13 +76,11 @@ const UserButton = styled('button')`
     }
     if (check && !e.target.checked) {
       temp.delete(e.target.value)
-      console.log(temp.size)
       if (temp.size === 0) {
         setButton(false)
       }
       setSelected(temp)
     }
-    console.log(Array.from(selected));
   }
 
   const getContact = async (e) => {
@@ -116,7 +114,6 @@ const UserButton = styled('button')`
       body: JSON.stringify({toId: [id]})
     })
     getContact();
-    console.log(await res.json())
   }
 
   const multiContactDelete = async (e) => {
@@ -132,11 +129,9 @@ const UserButton = styled('button')`
       body: JSON.stringify({toId: arr})
     })
     getContact();
-    console.log(await res.json())
   }
 
   const confirmContact = async (e) => {
-    console.log('ran')
     const toId = e.target.dataset.id;
     // const url = `http://localhost:4000/friends/confirm`
     const url = `${process.env.GATSBY_FRIENDS_URL}/confirm`

@@ -30,7 +30,6 @@ const UserList = ({location}) => {
       body: JSON.stringify({toId: friendId})
     })
     const response = await res.json();
-    console.log(response)
     return response;
   }
 

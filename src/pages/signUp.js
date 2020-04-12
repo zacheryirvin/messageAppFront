@@ -47,7 +47,6 @@ const Signup = () => {
     })
     setLogin(reset);
     const response = await res; 
-    console.log(response)
     if (response.status === 201) {
       const theState = await response.json()
       navigate('/login', {state: theState});

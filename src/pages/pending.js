@@ -77,11 +77,9 @@ const UserButton = styled('button')`
       body: JSON.stringify({toId: [id]})
     })
     getContact();
-    console.log(await res.json())
   }
 
   const confirmContact = async (e) => {
-    console.log('ran')
     const toId = e.target.dataset.id;
     // const url = `http://localhost:4000/friends/confirm`
     const url = `${process.env.GATSBY_FRIENDS_URL}/confirm`
@@ -145,7 +143,6 @@ const UserButton = styled('button')`
           border-radius: 5px;
             `}>Pending</h3>
           {friends.map(x => {
-            console.log(x)
           return (
             <div css={css`
             margin-top: 5px;

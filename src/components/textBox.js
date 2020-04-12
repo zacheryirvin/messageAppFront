@@ -48,7 +48,6 @@ const TextBox = (props) => {
     })
     const response = await res.json();
     setMessage("");
-    console.log(response)
     return response;
   }
   return (
