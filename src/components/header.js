@@ -30,6 +30,10 @@ const NavLink = styled(Link)`
   color: white;
   }
 
+  @media(max-width: 500px) {
+    font-size: 1.8rem;
+  }
+
 `
 
 
@@ -56,6 +60,7 @@ const Header = (props) => {
                 width: 49%;
               `}>
                 <NavLink to='/userList' state={{user: props.user}}>Users</NavLink>
+                <NavLink to='/pending' state={{user: props.user}}>Pending</NavLink>
               </div>
               <div css={css`
                 display: flex;

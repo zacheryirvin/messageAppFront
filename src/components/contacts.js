@@ -170,6 +170,10 @@ const UserButton = styled('button')`
         margin-top: 10px;
         border: 1px solid black;
         border-radius: 10px;
+
+        @media(max-width: 500px) {
+        width: 100%;
+        }
           `}>
           <div css={css`
           overflow-y: scroll;
@@ -235,6 +239,10 @@ const UserButton = styled('button')`
         margin-top: 10px;
         border: 1px solid black;
         border-radius: 10px;
+
+        @media(max-width: 500px) {
+        display: none;
+        }
           `}>
           <div css={css`
           overflow-y: scroll;

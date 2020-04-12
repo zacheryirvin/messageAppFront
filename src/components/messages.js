@@ -35,6 +35,7 @@ const Messages = (props) => {
               padding-left: 5px;
               padding-right: 5px;
               background-color: white;
+              width: 95%;
             `}>
             <div css={css`
               width: 45%;

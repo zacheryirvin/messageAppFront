@@ -58,7 +58,16 @@ const TextBox = (props) => {
       margin-top: 5px;
       margin-bottom: 5px;
     `}>
-      <textarea id="messages" name="textBox" cols="38" rows="10"
+    <textarea css={css`
+    font-size: 1.5rem;
+    width: 40%;
+    height: 150px;
+    @media(max-width: 500px) {
+    width: 95%;
+    height: 50px;
+    }
+      `}
+      id="messages" name="textBox" 
       autoComplete="on" autoCapitalize="sentences" maxLength="250" value={message} onChange={capInput}></textarea>
       <UserButton onClick={sendMessage}>Send</UserButton>
     </div>
