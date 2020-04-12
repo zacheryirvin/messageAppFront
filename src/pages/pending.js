@@ -122,7 +122,7 @@ const UserButton = styled('button')`
 
   return (
     <Layout>
-      <Header />
+      <Header user={props.location.state.user}/>
       <div css={css`
       width: 97%;
       height: 85vh;

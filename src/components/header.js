@@ -4,6 +4,11 @@ import {css, jsx} from '@emotion/core';
 import PropTypes from "prop-types";
 import React, {useState} from "react";
 
+const activeLink = {
+  border: "5px solid black",
+  borderRadius: "5px"
+}
+
 const NavLink = styled(Link)`
   margin-right: 10px;
   text-decoration: none;
@@ -48,6 +53,7 @@ const Header = (props) => {
     })
     const response = await res.json()
     return response;
+
 }
   return (
     <header>
@@ -59,8 +65,9 @@ const Header = (props) => {
                 justify-content: left;
                 width: 49%;
               `}>
-                <NavLink to='/userList' state={{user: props.user}}>Users</NavLink>
-                <NavLink css={css`
+              <NavLink activeStyle={activeLink}
+                to='/userList' state={{user: props.user}}>Users</NavLink>
+                <NavLink activeStyle={activeLink} css={css`
                   @media(min-width: 501px) {
                   display: none;
                 }
@@ -72,9 +79,9 @@ const Header = (props) => {
                 justify-content: flex-end;
                 width: 51%;
               `}>
-                <NavLink to='/' state={{user: props.user}}>Home</NavLink>
-                <NavLink css={css`margin-right: 0px;`} to='/login/' onClick={logout}> Logout</NavLink>
-                <NavLink css={css`display: none`} to='/login/'>Login</NavLink>
+                <NavLink activeStyle={activeLink} to='/' state={{user: props.user}}>Home</NavLink>
+                <NavLink activeStyle={activeLink} css={css`margin-right: 0px;`} to='/login/' onClick={logout}> Logout</NavLink>
+                <NavLink activeStyle={activeLink} css={css`display: none`} to='/login/'>Login</NavLink>
               </div>
               <div css={css`
                 height: 5px;
@@ -92,16 +99,16 @@ const Header = (props) => {
                 justify-content: flex-start;
                 width: 49%;
               `}>
-                <NavLink to='/userList' state={{user: props.user}}>Users</NavLink>
+                <NavLink activeStyle={activeLink} to='/userList' state={{user: props.user}}>Users</NavLink>
               </div>
               <div css={css`
                 display: flex;
                 justify-content: flex-end;
                 width: 51%;
               `}>
-                <NavLink to='/' state={{user: props.user}}>Home</NavLink>
-                <NavLink css={css`display: none`} to='/login/' onClick={logout}> Logout</NavLink>
-                <NavLink css={css`margin-right: 0px;`} to='/login/'>Login</NavLink>
+                <NavLink activeStyle={activeLink} to='/' state={{user: props.user}}>Home</NavLink>
+                <NavLink activeStyle={activeLink} css={css`display: none`} to='/login/' onClick={logout}> Logout</NavLink>
+                <NavLink activeStyle={activeLink} css={css`margin-right: 0px;`} to='/login/'>Login</NavLink>
               </div>
               <div css={css`
                 height: 5px;
