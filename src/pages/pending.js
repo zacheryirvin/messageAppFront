@@ -8,6 +8,11 @@ import Header from '../components/header.js'
 
 const Pending = (props) => {
 
+  let user;
+  if (props.location.state) {
+    user = props.location.state.user
+  }
+
 const UserLink = styled(Link)`
   display: inline-block;
   vertical-align: middle;
@@ -120,7 +125,7 @@ const UserButton = styled('button')`
 
   return (
     <Layout>
-      <Header user={props.location.state.user}/>
+      <Header user={user}/>
       <div css={css`
       width: 97%;
       height: 85vh;
