@@ -60,7 +60,12 @@ const Header = (props) => {
                 width: 49%;
               `}>
                 <NavLink to='/userList' state={{user: props.user}}>Users</NavLink>
-                <NavLink to='/pending' state={{user: props.user}}>Pending</NavLink>
+                <NavLink css={css`
+                  @media(min-width: 501px) {
+                  display: none;
+                }
+                  `}
+                  to='/pending' state={{user: props.user}}>Pending</NavLink>
               </div>
               <div css={css`
                 display: flex;
