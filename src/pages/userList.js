@@ -96,6 +96,10 @@ const UserButton = styled('button')`
         height: 85vh;
         overflow: auto;
         justify-content: space-between;
+
+        @media(min-width: 500px) {
+        flex-Wrap: no-wrap;
+        }
           `}>
         {users.map(x => {
           if (selected.includes(x.id)) {
@@ -108,6 +112,10 @@ const UserButton = styled('button')`
             border-radius: 5px;
             margin: 3px;
             padding: 5px;
+
+            @media(max-width: 500px) {
+            width: 88%;
+            }
               `} 
               key={x.user_name}>
               <li css={css`
@@ -129,6 +137,10 @@ const UserButton = styled('button')`
             border-radius: 5px;
             margin: 3px;
             padding: 5px;
+
+            @media(max-width: 500px) {
+            width: 90%;
+            }
               `} 
               key={x.user_name}>
               <li css={css`

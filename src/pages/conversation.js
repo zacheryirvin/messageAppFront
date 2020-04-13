@@ -109,6 +109,7 @@ const Conversation = ({location}) => {
               <Messages messages={convo} userId={userId}
                 user={user} friendId={friendId}
                 friend={friend} addMsg={addMsg}
+                show={false}
               />
             </div>
           </Layout>
