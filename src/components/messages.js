@@ -34,11 +34,11 @@ const Messages = (props) => {
               justify-content: flex-end;
               padding-left: 5px;
               padding-right: 5px;
-              background-color: white;
               width: 95%;
             `}>
             <div css={css`
               width: 45%;
+              background-color: white;
               border: 1px solid black;
               border-radius: 10px;
               padding: 5px;

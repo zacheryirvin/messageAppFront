@@ -1,8 +1,36 @@
 import React, {useEffect, useState} from 'react'
 import Header from '../components/header.js'
 import Layout from "../components/layout.js"
+import {css} from '@emotion/core'
+import styled from '@emotion/styled'
 
 const UserList = ({location}) => {
+
+const UserButton = styled('button')`
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 5px;
+  padding: 2px;
+  padding-left: 8px;
+  padding-right: 8px;
+
+  :hover {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform, color, background-color;
+  transition-property: transform, color, background-color;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  }
+`
 
   const getUsers = async (e) => {
     // const url = `http://localhost:4000/users/all`
@@ -14,6 +42,8 @@ const UserList = ({location}) => {
     const response = await res.json()
     return response;
   }
+
+  const [selected, setSelected] = useState([])
 
   const requestFriend = async (e) => {
     e.preventDefault();
@@ -30,6 +60,7 @@ const UserList = ({location}) => {
       body: JSON.stringify({toId: friendId})
     })
     const response = await res.json();
+    setSelected([...selected, friendId])
     return response;
   }
 
@@ -48,6 +79,7 @@ const UserList = ({location}) => {
     }
     anon();
   },[])
+  console.log(selected)
 
   let user;
   if (location.state) {
@@ -58,14 +90,57 @@ const UserList = ({location}) => {
     <>
       <Layout>
         <Header user={user}/>
-        <ul>
+        <ul css={css`
+        display: flex;
+        flex-wrap: wrap;
+        height: 85vh;
+        overflow: auto;
+        justify-content: space-between;
+          `}>
         {users.map(x => {
-          return (
-            <div key={x.user_name}>
-              <li key={x.user_name}>{x.user_name}</li>
-              <button id={x.id} key={x.id} onClick={requestFriend}>Add</button>
+          if (selected.includes(x.id)) {
+            return (
+              <div css={css`
+            display: flex;
+            width: 30%;
+            align-items: center;
+            border: 5px solid darkgreen;
+            border-radius: 5px;
+            margin: 3px;
+            padding: 5px;
+              `} 
+              key={x.user_name}>
+              <li css={css`
+              font-family: Roboto;
+              font-size: 1.7rem;
+              padding-right: 5px;
+                `}
+                key={x.user_name}>{x.user_name}</li>
+              <UserButton id={x.id} key={x.id} onClick={requestFriend}>Add</UserButton>
             </div>
-          )
+            )
+          } else {
+            return (
+              <div css={css`
+            display: flex;
+            width: 30%;
+            align-items: center;
+            border: 1px solid black;
+            border-radius: 5px;
+            margin: 3px;
+            padding: 5px;
+              `} 
+              key={x.user_name}>
+              <li css={css`
+              font-family: Roboto;
+              font-size: 1.7rem;
+              padding-right: 5px;
+                `}
+                key={x.user_name}>{x.user_name}</li>
+              <UserButton id={x.id} key={x.id} onClick={requestFriend}>Add</UserButton>
+            </div>
+            )
+          }
         })}
         </ul>
       </Layout>

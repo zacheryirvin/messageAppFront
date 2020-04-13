@@ -240,9 +240,10 @@ const UserButton = styled('button')`
         }
           `}>
           <div css={css`
-          overflow-y: scroll;
           width: 95%;
           padding: 10px;
+          height: 95%;
+          overflow-y: scroll;
             `}>
             <h3 css={css`
             border: 1px solid black;
