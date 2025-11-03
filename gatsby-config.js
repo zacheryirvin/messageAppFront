@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/messageAppFront",
   siteMetadata: {
     title: `ZMESSAGE`,
     description: `Secure, real-time messaging app.`,
