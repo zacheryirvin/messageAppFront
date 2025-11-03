@@ -5,7 +5,6 @@ module.exports = {
     author: `badCompany55`,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -28,17 +27,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-emotion`,
-    {
-      resolve: `gatsby-plugin-prefetch-google-fonts`,
-      options: {
-        fonts: [
-          {
-            family: `Roboto Mono`,
-            variants: [`400`, `700`]
-          }
-        ]
-      }
-    },
 	{
 		resolve: `gatsby-plugin-manifest`,
 		options: {

@@ -5,3 +5,7 @@
  */
 
 // You can delete this file if you're not using it
+// gatsby-browser.js
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/600.css";
+
