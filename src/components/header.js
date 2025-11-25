@@ -45,8 +45,8 @@ const NavLink = styled(Link)`
 const Header = (props) => {
   const user = props.user
   const logout = async () => {
-    // const url = `http://localhost:4000/users/logout`
-    const url = `${process.env.GATSBY_USERS_URL}/logout`
+     const url = `http://localhost:4000/users/logout`
+    //const url = `${process.env.GATSBY_USERS_URL}/logout`
     const res = await fetch(url, {
       method: 'GET',
       credentials: 'include'

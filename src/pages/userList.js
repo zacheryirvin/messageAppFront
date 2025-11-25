@@ -79,7 +79,7 @@ const UserButton = styled('button')`
     }
     anon();
   },[])
-  console.log(selected)
+  //console.log(selected)
 
   let user;
   if (location.state) {
