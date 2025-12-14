@@ -22,7 +22,8 @@
     "pusher-js": "^5.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "recharts": "^3.5.1"
   },
   "devDependencies": {
     "gatsby": "^5.15.0",
