@@ -33,8 +33,8 @@ const UserButton = styled('button')`
 `
 
   const getUsers = async (e) => {
-    const url = `http://localhost:4000/users/all`
-    //const url = `${process.env.GATSBY_USERS_URL}/all`
+    //const url = `http://localhost:4000/users/all`
+    const url = `${process.env.GATSBY_USERS_URL}/all`
     const res = await fetch(url, {
       method: 'GET',
       credentials: 'include',
@@ -48,8 +48,8 @@ const UserButton = styled('button')`
   const requestFriend = async (e) => {
     e.preventDefault();
     const friendId = e.target.id
-    const url = `http://localhost:4000/friends/add`;
-    //const url = `${process.env.GATSBY_FRIENDS_URL}/add`
+    //const url = `http://localhost:4000/friends/add`;
+    const url = `${process.env.GATSBY_FRIENDS_URL}/add`
     const res = await fetch(url, {
       headers: {
         Accept: 'application/json',

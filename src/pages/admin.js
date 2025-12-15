@@ -7,7 +7,8 @@ import {
   PieChart, Pie, Legend
 } from "recharts";
 
-const API = "http://localhost:5000/admin"; // your server listens on MGDB_PORT
+//const API = "http://localhost:5000/admin"; // your server listens on MGDB_PORT
+const API = `${process.env.API_URL}/admin`; // your server listens on MGDB_PORT
 
 async function apiGet(path) {
   const res = await fetch(`${API}${path}`, {
