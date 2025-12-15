@@ -52,7 +52,10 @@ const Conversation = ({ location }) => {
 
         pusher = new Pusher("5033bb4cfc6d9a9ce2ea", {
           cluster: "us3",
+	  forceTLS:true,
+	  enableTransports: ["ws", "wss", "xhr_streaming", "xhr_polling"],
         });
+	Pusher.logToConsole=true;
 
         channel = pusher.subscribe("watch_messages");
 
@@ -62,6 +65,7 @@ const Conversation = ({ location }) => {
           const b = String(incoming.to_id);
           const me = String(userId);
           const other = String(toId);
+          console.log(incoming);
 
           const belongs =
             (a === me && b === other) || (a === other && b === me);
