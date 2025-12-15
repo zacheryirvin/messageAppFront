@@ -8,7 +8,7 @@ import {
 } from "recharts";
 
 //const API = "http://localhost:5000/admin"; // your server listens on MGDB_PORT
-const API = `${process.env.GATSBY_BASE_URL}/admin/`; // your server listens on MGDB_PORT
+const API = `${process.env.GATSBY_BASE_URL}/admin`; // your server listens on MGDB_PORT
 
 async function apiGet(path) {
   const res = await fetch(`${API}${path}`, {
