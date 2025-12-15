@@ -58,6 +58,9 @@ const Conversation = ({ location }) => {
 	Pusher.logToConsole=true;
 
         channel = pusher.subscribe("watch_messages");
+	channel.bind_global((eventName, data) => {
+  console.log("PUSHER GLOBAL EVENT:", eventName, data);
+});
 
         channel.bind("new_record", (incoming) => {
           // Only accept messages belonging to THIS conversation
