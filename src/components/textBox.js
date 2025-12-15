@@ -36,8 +36,8 @@ const TextBox = (props) => {
     e.preventDefault();
     console.log(props.friendId);
     const toSend = JSON.stringify({toId: props.friendId, message: message})
-    const url = 'http://localhost:4000/messages';
-    //const url = process.env.GATSBY_MESSAGES_URL
+    //const url = 'http://localhost:4000/messages';
+    const url = process.env.GATSBY_MESSAGES_URL
     const res = await fetch(url, {
       headers: {
         Accept: '*',
