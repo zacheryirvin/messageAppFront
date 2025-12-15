@@ -1,122 +1,136 @@
-import React from 'react'
-import {useState, useEffect} from 'react'
-import {css} from '@emotion/core'
-import Layout from '../components/layout.js'
-import Header from '../components/header.js'
-import TextBox from '../components/textBox.js'
-import Messages from '../components/messages.js'
-import Pusher from 'pusher-js'
-import layout from '../components/layout.js'
+import React, { useState, useEffect } from "react";
+import Layout from "../components/layout.js";
+import Header from "../components/header.js";
+import TextBox from "../components/textBox.js";
+import Messages from "../components/messages.js";
+import Pusher from "pusher-js";
 
+const Conversation = ({ location }) => {
+  // Guard: Gatsby navigation refresh can lose location.state
+  const toId = location?.state?.friend?.id;
+  const user = location?.state?.user;
+  const friend = location?.state?.friend;
+  const userId = user?.id;
 
-const Conversation = ({location}) => {
-  let toId;
-  if (location.state){
-    toId = location.state.friend.id
-  }
-
-  const getConversation = async (e) => {
-    //const url = `http://localhost:4000/messages/${toId}`;
-    const url = `${process.env.GATSBY_MESSAGES_URL}/${toId}`
-    const res = await fetch(url, {
-      method: 'GET',
-      credentials: 'include'
-    })
-    const response = await res.json();
-    return await response;
-  }
-
-  const getConversationFeed = async (e) => {
-    //const url = `http://localhost:4000/messages/${toId}/feed`;
-    const url = `${process.env.GATSBY_MESSAGES_URL}/${toId}/feed`
-    const res = await fetch(url, {
-      method: 'GET',
-      credentials: 'include'
-    })
-    const response = await res.json();
-  }
   const [convo, setConvo] = useState([]);
-  const [msg, setMsg] = useState()
-  const string = JSON.stringify(convo)
 
+  const getConversation = async () => {
+    if (!toId) return [];
+    const url = `${process.env.GATSBY_MESSAGES_URL}/${toId}`;
+    const res = await fetch(url, {
+      method: "GET",
+      credentials: "include",
+    });
+    const response = await res.json();
+    return response;
+  };
+
+  const getConversationFeed = async () => {
+    if (!toId) return;
+    const url = `${process.env.GATSBY_MESSAGES_URL}/${toId}/feed`;
+    await fetch(url, {
+      method: "GET",
+      credentials: "include",
+    });
+  };
+
+  // Load conversation + subscribe to realtime updates
   useEffect(() => {
-    const anon = async () => {
-      const conversation = await getConversation();
-      const feed = await getConversationFeed();
-      setConvo(conversation);
-    }
-    anon();
-    const pusher = new Pusher('5033bb4cfc6d9a9ce2ea', {
-      cluster: 'us3',
-    })
-    const channel = pusher.subscribe('watch_messages')
-    channel.bind('new_record', (msg) => {
-      // props.addMsg(messages, msg)
-      setMsg(msg)
-    })
-    
-  }, [])
+    if (!toId || !userId) return;
 
+    let pusher;
+    let channel;
 
-  const addMsg = async (messages) => {
-      // const temp = await getConversation();
-      setConvo(messages)
-  }
+    const init = async () => {
+      try {
+        const conversation = await getConversation();
+        setConvo(conversation);
 
-  let user,
-    friendId,
-    userId,
-    friend
+        // If this endpoint is needed to "activate" backend LISTEN/NOTIFY, keep it.
+        // Otherwise you can remove it safely (Pusher is doing realtime).
+        await getConversationFeed();
 
-  if (location.state) {
-    user = location.state.user;
-    friendId = location.state.friend.id;
-    userId = location.state.user.id;
-    friend = location.state.friend;
-  }
+        pusher = new Pusher("5033bb4cfc6d9a9ce2ea", {
+          cluster: "us3",
+        });
 
-  useEffect(() => {
-    const temp = [...convo]
-    if (msg) {
-      const findId = temp.find(x => {
-        return x.id === msg.id
-      })
-      if (!findId) {
-        if ((msg.to_id === toId && msg.from_id === userId) || msg.from_id === toId && msg.to_id === userId) {
-          temp.unshift(msg)
-          setConvo(temp)
-        }
+        channel = pusher.subscribe("watch_messages");
+
+        channel.bind("new_record", (incoming) => {
+          // Only accept messages belonging to THIS conversation
+          const a = String(incoming.from_id);
+          const b = String(incoming.to_id);
+          const me = String(userId);
+          const other = String(toId);
+
+          const belongs =
+            (a === me && b === other) || (a === other && b === me);
+
+          if (!belongs) return;
+
+          // Keep newest-first ordering (matches your old unshift behavior)
+          setConvo((prev) => {
+            const exists = prev.some(
+              (m) => String(m.id) === String(incoming.id)
+            );
+            if (exists) return prev;
+            return [incoming, ...prev];
+          });
+        });
+      } catch (err) {
+        console.error("Conversation init failed:", err);
       }
-    }
-  },[msg])
+    };
+
+    init();
+
+    return () => {
+      try {
+        if (channel) channel.unbind_all();
+        if (pusher) {
+          pusher.unsubscribe("watch_messages");
+          pusher.disconnect();
+        }
+      } catch (e) {
+        // ignore cleanup errors
+      }
+    };
+  }, [toId, userId]);
+
+  // If user navigated directly here without state, show something safe
+  if (!toId || !userId) {
+    return (
+      <Layout>
+        <Header user={user} />
+        <div style={{ padding: 16 }}>
+          <p>Missing conversation context. Please go back and re-open the chat.</p>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
-    <>
-      {convo.length === 0 
-      ? <div>
-        <Layout>
-          <Header user={user}/>
-              <div>
-                <TextBox friendId={friendId}/>
-              </div>
-          </Layout>
-          </div>
-        : <>
-          <Layout>
-            <Header user={user}/>
-            <div>
-              <TextBox friendId={friendId}/>
-              <Messages messages={convo} userId={userId}
-                user={user} friendId={friendId}
-                friend={friend} addMsg={addMsg}
-                show={false}
-              />
-            </div>
-          </Layout>
-          </>
-      }
-    </>
-  )
-}
+    <Layout>
+      <Header user={user} />
+      <div>
+        <TextBox friendId={toId} />
+
+        {/* Keep your original behavior: show TextBox even if convo empty */}
+        {convo.length > 0 && (
+          <Messages
+            messages={convo}
+            userId={userId}
+            user={user}
+            friendId={toId}
+            friend={friend}
+            addMsg={(messages) => setConvo(messages)}
+            show={false}
+          />
+        )}
+      </div>
+    </Layout>
+  );
+};
 
 export default Conversation;
+
