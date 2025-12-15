@@ -25,6 +25,9 @@
     "react-helmet": "^6.1.0",
     "recharts": "^3.5.1"
   },
+  "engines": {
+     "node": "18.x"
+  },
   "devDependencies": {
     "gatsby": "^5.15.0",
     "prettier": "^1.19.1"
