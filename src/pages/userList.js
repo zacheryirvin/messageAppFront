@@ -66,13 +66,13 @@ const UserList = ({ location }) => {
 
   // ✅ Uses your route: /friends/suggestions
   const getSuggestions = async () => {
-    const url = `${process.env.GATSBY_FRIENDS_URL}/suggestions;
+    const url = `${process.env.GATSBY_FRIENDS_URL}/suggestions`;
     const res = await fetch(url, {
       method: "GET",
       credentials: "include",
     });
-    let result = res.json(); // should be array of suggested users or ids
-    result = result.map(s => s.id);
+    let result = res.json();
+    return result.map(s => s.id); // should be array of suggested users or ids
   };
 
   const [selected, setSelected] = useState([]);
