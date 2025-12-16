@@ -72,6 +72,7 @@ const UserList = ({ location }) => {
       credentials: "include",
     });
     let result = res.json();
+    console.log(result)
     return result.map(s => s.id); // should be array of suggested users or ids
   };
 
