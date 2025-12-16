@@ -73,7 +73,6 @@ const UserList = ({ location }) => {
     });
     let result = res.json(); // should be array of suggested users or ids
     result = result.map(s => s.id);
-    console.log(result);
   };
 
   const [selected, setSelected] = useState([]);
