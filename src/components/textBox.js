@@ -34,7 +34,7 @@ const TextBox = (props) => {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    console.log(props.friendId);
+    //console.log(props.friendId);
     const toSend = JSON.stringify({toId: props.friendId, message: message})
     //const url = 'http://localhost:4000/messages';
     const url = process.env.GATSBY_MESSAGES_URL
