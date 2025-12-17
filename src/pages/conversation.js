@@ -55,7 +55,6 @@ const Conversation = ({ location }) => {
 	  forceTLS:true,
 	  enableTransports: ["ws", "wss", "xhr_streaming", "xhr_polling"],
         });
-	Pusher.logToConsole=true;
 
         channel = pusher.subscribe("watch_messages");
 	channel.bind_global((eventName, data) => {
