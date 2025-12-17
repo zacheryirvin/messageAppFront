@@ -56,7 +56,7 @@ const UserList = ({ location }) => {
   `;
 
   const getUsers = async () => {
-    const url = `${process.env.GATSBY_USERS_URL}/all`;
+    const url = `${process.env.GATSBY_USERS_URL}all`;
     const res = await fetch(url, {
       method: "GET",
       credentials: "include",
@@ -71,6 +71,7 @@ const UserList = ({ location }) => {
       method: "GET",
       credentials: "include",
     });
+    console.log(res.json())
     return res.json(); // should be array of suggested users or ids
   };
 
