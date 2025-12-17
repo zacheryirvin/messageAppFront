@@ -66,7 +66,7 @@ const UserList = ({ location }) => {
 
   // ✅ Uses your route: /friends/suggestions
   const getSuggestions = async () => {
-    const url = `${process.env.GATSBY_FRIENDS_URL}/suggestions;
+    const url = `${process.env.GATSBY_FRIENDS_URL}/suggestions`;
     const res = await fetch(url, {
       method: "GET",
       credentials: "include",
@@ -115,6 +115,7 @@ const UserList = ({ location }) => {
       // Load suggestions
       try {
         const suggestions = await getSuggestions();
+	console.log(suggestions);
 
         // This handles two common shapes:
         // 1) suggestions = [{ id: "uuid", ... }, ...]
