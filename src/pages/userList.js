@@ -71,7 +71,8 @@ const UserList = ({ location }) => {
       method: "GET",
       credentials: "include",
     });
-    return res.json(); // should be array of suggested users or ids
+    console.log(res)
+    //return res.json(); // should be array of suggested users or ids
   };
 
   const [selected, setSelected] = useState([]);
