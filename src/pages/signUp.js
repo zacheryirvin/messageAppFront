@@ -34,7 +34,7 @@ const Signup = () => {
 
   const hitLogin = async (e) => {
     //const url = 'http://localhost:4000/users/register';
-    const url = `${process.env.GATSBY_USERS_URL}/register`
+    const url = `${process.env.GATSBY_USERS_URL}register`
     const reset = {first_name: "", last_name: "", user_name: "", email: "", password: ""}
     const res = await fetch(url, {
       headers: {
