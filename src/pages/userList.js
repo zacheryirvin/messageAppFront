@@ -71,7 +71,7 @@ const UserList = ({ location }) => {
       method: "GET",
       credentials: "include",
     });
-    console.log(res.json())
+    console.log(res)
     return res.json(); // should be array of suggested users or ids
   };
 
