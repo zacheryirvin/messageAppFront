@@ -59,7 +59,6 @@ const Conversation = ({ location }) => {
 
         channel = pusher.subscribe("watch_messages");
 	channel.bind_global((eventName, data) => {
-  console.log("PUSHER GLOBAL EVENT:", eventName, data);
 });
 
         channel.bind("new_record", (incoming) => {
@@ -68,7 +67,6 @@ const Conversation = ({ location }) => {
           const b = String(incoming.to_id);
           const me = String(userId);
           const other = String(toId);
-          console.log(incoming);
 
           const belongs =
             (a === me && b === other) || (a === other && b === me);
